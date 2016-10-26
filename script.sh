@@ -11,14 +11,14 @@ SCRIPT_NAME=$(basename "${0}");
 ################################################################################
 # Help
 ################################################################################
-printHelp()
+helpAction()
 {
   cat <<HEREDOC
 Shell Boilerplate Script
 Version: ${VERSION}
 
 Usage:
-  ${SCRIPT_NAME} [--options] [<arguments>]
+  ${SCRIPT_NAME} [action name] [--options] [<arguments>]
 
 HEREDOC
 }
@@ -28,7 +28,14 @@ HEREDOC
 ################################################################################
 main()
 {
-  printHelp;
+  local _actionName=$1;
+  if [[ ! "$_actionName" ]]
+  then
+    _actionName=help
+  fi
+  _actionName="${_actionName}Action"
+
+  ${_actionName}
 }
-main "$@"
+main "${@:-}"
 
