@@ -12,10 +12,31 @@ DEFAULT_ACTION=help
 ################################################################################
 # Core Functions
 ################################################################################
-route()
+
+# Dispatch action
+dispatch()
 {
   local _actionName=$1
   printf "%sAction" "${_actionName}"
+}
+
+# Process Options
+processOptions()
+{
+  while [[ $# -gt 0 ]]
+  do
+    key="$1"
+    case $key in
+      --debug)
+        set -o xtrace;
+      ;;
+    *)
+      echo "Invalid argument $key";
+      exit 1;
+    ;;
+    esac
+  shift
+  done
 }
 
 ################################################################################
@@ -40,7 +61,10 @@ HEREDOC
 main()
 {
   local _actionName=${1:-$DEFAULT_ACTION};
-  $(route ${_actionName})
+  shift;
+  processOptions "$@"
+
+  $(dispatch ${_actionName})
 }
 main "${@:-}"
 
