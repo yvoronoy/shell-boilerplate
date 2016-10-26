@@ -7,9 +7,19 @@ set -o nounset
 
 VERSION=1.0.0
 SCRIPT_NAME=$(basename "${0}");
+DEFAULT_ACTION=help
 
 ################################################################################
-# Help
+# Core Functions
+################################################################################
+route()
+{
+  local _actionName=$1
+  printf "%sAction" "${_actionName}"
+}
+
+################################################################################
+# Action Controllers
 ################################################################################
 helpAction()
 {
@@ -23,19 +33,14 @@ Usage:
 HEREDOC
 }
 
+
 ################################################################################
 # Main
 ################################################################################
 main()
 {
-  local _actionName=$1;
-  if [[ ! "$_actionName" ]]
-  then
-    _actionName=help
-  fi
-  _actionName="${_actionName}Action"
-
-  ${_actionName}
+  local _actionName=${1:-$DEFAULT_ACTION};
+  $(route ${_actionName})
 }
 main "${@:-}"
 
