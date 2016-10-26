@@ -6,8 +6,8 @@ Shell Boilerplate
 ```
 wget https://raw.githubusercontent.com/yvoronoy/shell-boilerplate/master/script.sh
 ```
-### Dispatch your action
-Uage:
+### How create custom action
+Usage:
   script.sh [action name] [--options] [<arguments>]
 
 You can specify your own action for example _helloworld_
